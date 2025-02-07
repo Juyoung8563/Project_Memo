@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
+    <!-- OG Tag -->
+    <meta property="og:title" content="📝 Memo" />
+    <meta property="og:description" content="배포가 3000만년 걸린 낡은 메모장..." />
+    <meta property="og:image" content="..." />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="./img/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="./img/favicon.svg" />
+    <link rel="shortcut icon" href="./img/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./img/apple-touch-icon.png"
+    />
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TODAY'S MEMO</title>
@@ -119,7 +139,7 @@
           const form = new FormData(controller);
           const memo = {
             text: form.get("memoText"),
-            bgColor: form.get("memoBgColor")
+            bgColor: form.get("memoBgColor"),
           };
           memoData.push(memo);
           drawMemo();
