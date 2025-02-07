@@ -1,0 +1,136 @@
+/* 전체 요소 초기화 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 기본 바디 스타일 */
+  body {
+    background-color: #101820;
+    font-family: 'Arial', sans-serif;
+    color: #101820; /* 메인 컬러 */
+    padding: 20px;
+  }
+  
+  /* 중앙 정렬 및 최대 폭 설정 */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* 헤더 영역 스타일 */
+  header {
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: #d98a3b;
+    color: #101820;
+    text-align: center;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  header p {
+    font-size: 1rem;
+    color: #101820;
+  }
+  
+  /* 폼 영역 스타일 (카드 느낌의 박스) */
+  .form-body {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  .form-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .form-body label {
+    font-weight: bold;
+    color: #101820;
+  }
+  .form-body input[type="text"],
+  .form-body input[type="color"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .form-body button {
+    background-color: #F2AA4C; /* 서브 컬러 */
+    color: #101820;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .form-body button:hover {
+    background-color: #d98a3b; /* 약간 어두운 서브 컬러 */
+  }
+  
+  /* 메모 영역을 flex 컨테이너로 설정 */
+  #view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* 메모 카드 스타일 */
+  .memo-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+  }
+  .memo-card:hover {
+    transform: translateY(-5px);
+  }
+  .memo-card p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+  }
+  
+  /* 버튼 그룹(메모 카드 내부) */
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .memo-card button {
+    background-color: #F2AA4C;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  .memo-card button:hover {
+    background-color: #d98a3b;
+  }
+  

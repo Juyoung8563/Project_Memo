@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODAY'S MEMO</title>
+    <!-- 외부 CSS 파일 연결 -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📝 Today's MEMO 📝</h1>
+        <p class="main-text-p">
+          메모를 다시 보고 싶다면 "로컬 저장"을 클릭하세요 <br />
+          🚨 주의! 삭제를 누르면 메모가 영원히 사라집니다.
+        </p>
+      </header>
+
+      <div class="form-body">
+        <form id="controller">
+          <label>
+            메모 내용:
+            <input name="memoText" type="text" required />
+          </label>
+          <label>
+            배경 색상:
+            <input id="colorInput" name="memoBgColor" type="color" />
+          </label>
+          <button type="submit">추가 ✒️</button>
+        </form>
+      </div>
+
+      <section id="view"></section>
+    </div>
+
+    <script>
+      function onload() {
+        // 랜덤한 밝은 색상 생성 (색상 입력 초기값용)
+        function goodBgColor() {
+          return `#${[...Array(3)]
+            .map(() => Math.floor(Math.random() * 56) + 200)
+            .map((v) => v.toString(16).padStart(2, "0"))
+            .join("")}`;
+        }
+        document.querySelector("#colorInput").value = goodBgColor();
+
+        // 로컬 및 세션에 저장된 메모를 합친 배열
+        const memoData = [
+          ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+          ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+        ];
+
+        function drawMemo() {
+          const view = document.querySelector("#view");
+          view.innerHTML = "";
+          for (const memo of memoData) {
+            // memoElement에 카드 클래스 추가
+            const memoElement = document.createElement("div");
+            memoElement.classList.add("memo-card");
+            // 배경색은 사용자가 선택한 색상 적용 (인라인 스타일은 우선순위가 높습니다)
+            memoElement.style.backgroundColor = memo.bgColor;
+
+            // 메모 텍스트는 <p> 태그로 감싸기
+            const memoText = document.createElement("p");
+            memoText.textContent = memo.text;
+            memoElement.appendChild(memoText);
+
+            // 버튼들을 담을 그룹 컨테이너
+            const btnGroup = document.createElement("div");
+            btnGroup.classList.add("btn-group");
+
+            // [삭제] 버튼
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", () => {
+              memoElement.remove();
+            });
+            btnGroup.appendChild(deleteButton);
+
+            // [로컬 저장] 버튼
+            const localSaveButton = document.createElement("button");
+            localSaveButton.textContent = "로컬 저장";
+            localSaveButton.addEventListener("click", () => {
+              localStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(localStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+              alert("메모가 로컬에 저장되었습니다.");
+            });
+            btnGroup.appendChild(localSaveButton);
+
+            // [세션 저장] 버튼
+            const sessionSaveButton = document.createElement("button");
+            sessionSaveButton.textContent = "세션 저장";
+            sessionSaveButton.addEventListener("click", () => {
+              sessionStorage.setItem(
+                "memoStorage",
+                JSON.stringify([
+                  ...(JSON.parse(sessionStorage.getItem("memoStorage")) ?? []),
+                  memo,
+                ])
+              );
+              alert("메모가 세션에 저장되었습니다.");
+            });
+            btnGroup.appendChild(sessionSaveButton);
+
+            memoElement.appendChild(btnGroup);
+            view.appendChild(memoElement);
+          }
+        }
+
+        const controller = document.querySelector("#controller");
+        controller.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const form = new FormData(controller);
+          const memo = {
+            text: form.get("memoText"),
+            bgColor: form.get("memoBgColor")
+          };
+          memoData.push(memo);
+          drawMemo();
+          controller.reset();
+          // 새로운 색상 적용
+          document.querySelector("#colorInput").value = goodBgColor();
+        });
+
+        drawMemo();
+      }
+      onload();
+    </script>
+  </body>
+</html>
